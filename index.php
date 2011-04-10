@@ -60,7 +60,7 @@ header("Content-Type: text/html; charset=UTF-8");
   
 <body onload='onLoad();'>
 <script type='text/javascript'>
-<?php include 'jquery.extra.js'; ?>
+<?php include 'jquery.extra.min.js'; ?>
 </script>
 
 <div id=paintbox>
