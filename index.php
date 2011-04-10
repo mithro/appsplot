@@ -18,7 +18,7 @@ case 'appsplot.com':
 // Appengine Mode - Host is from the servername, reset is from server URI.
 default:
   $hostname = substr($servername, 0, strlen($servername)-strlen('.appsplot.com'));
-  $url = "$url$serveruri";
+  $url = "http://$hostname.appspot.com$serveruri";
 }
 
 // Check the URL seems valid
