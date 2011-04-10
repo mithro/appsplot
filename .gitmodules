@@ -1,0 +1,6 @@
+[submodule "splatter"]
+	path = splatter
+	url = git://github.com/mithro/splatter.git
+[submodule "getscrollbarwidth"]
+	path = getscrollbarwidth
+	url = https://github.com/brandonaaron/jquery-getscrollbarwidth.git
