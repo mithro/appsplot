@@ -1,37 +1,4 @@
 <?php
-
-function get_web_page( $url )
-{
-    $options = array(
-        CURLOPT_RETURNTRANSFER => true,     // return web page
-        CURLOPT_HEADER         => false,    // don't return headers
-        CURLOPT_FOLLOWLOCATION => true,     // follow redirects
-        CURLOPT_ENCODING       => "",       // handle all encodings
-        CURLOPT_USERAGENT      => "http://appsplot.com/".urlencode($url), // who am i
-        CURLOPT_AUTOREFERER    => true,     // set referer on redirect
-        CURLOPT_CONNECTTIMEOUT => 5,        // timeout on connect
-        CURLOPT_TIMEOUT        => 10,       // timeout on response
-        CURLOPT_MAXREDIRS      => 5,        // stop after 10 redirects
-        CURLOPT_RANGE          => '0-5',    // only get the first bit of the file.
-    );
-
-    $ch      = curl_init( $url );
-    curl_setopt_array( $ch, $options );
-    $content = curl_exec( $ch );
-    $err     = curl_errno( $ch );
-    $errmsg  = curl_error( $ch );
-    $header  = curl_getinfo( $ch );
-    curl_close( $ch );
-
-    $header['errno']   = $err;
-    $header['errmsg']  = $errmsg;
-    $header['content'] = $content;
-    return $header;
-}
-
-$memcache = new Memcache;
-$memcache->addServer('localhost', 11211);
-
 // The default URL is google
 $url = 'http://www.google.com';
 
@@ -64,34 +31,14 @@ var_dump($urlbits);
  exit;
 }
 
-$url = htmlspecialchars($url);
-
-// Get the title
-$title = $memcache->get(md5($url)."-title");
-if (!$title) {
-  $html = get_web_page($url);
-  if ($html['errno'] == 0) {
-   // Extract the title 
-   $result = array();
-   preg_match("/<title>(.*?)<\/title>/i", $html['content'], $result);
-   if (sizeof($result) > 0) {
-    $title = htmlspecialchars($result[1]);
-   }
-  } else {
-   $title = "";
-  }
-  $memcache->set(md5($url)."-title",$title,MEMCACHE_COMPRESSED);
-  $memcached_title = false;
-  $title = $title." - New";
-} else {
-  $memcached_title = true;
-  $title = $title." - Memcached";
-}
+$jsurl = json_encode($url);
+$jsurl = substr($jsurl, 1, strlen($jsurl)-2);
+$htmlurl = htmlspecialchars($url);
 ?>
 <html>  
 <head>  
   <meta charset="utf-8"/>  
-  <title><?php echo $title ?></title>
+  <title></title>
   <link rel="shortcut icon" href="http://<?php echo $urlbits['host']; ?>/favicon.ico" />
 
   <style type="text/css">
@@ -190,12 +137,14 @@ a.button {
     padding-right: 18px; /* sliding doors padding */
     text-decoration: none;
     text-align: center;
+    cursor: pointer;
 }
 a.button span.b {
     background: transparent url('/i/bg_button_span.gif') no-repeat;
     display: block;
     line-height: 14px; 
     padding: 5px 0 5px 18px;
+    cursor: pointer;
 }
 
 a.bigbutton {
@@ -209,6 +158,12 @@ a.bigbutton {
     margin: 0;
     margin-right: 18px;
     padding-right: 54px; /* sliding doors padding */
+    cursor: pointer;
+}
+a.button:active span.b {
+    background-position: bottom left;
+    padding: 6px 0 4px 18px; /* push text down 1px */
+    cursor: pointer;
 }
 
 a.bigbutton span.b {
@@ -216,21 +171,20 @@ a.bigbutton span.b {
     display: block;
     padding: 15px 0 15px 54px;
     height: 43px;
+    cursor: pointer;
 }
 
 a.button:active, a.bigbutton:active {
     background-position: bottom right;
     color: #000;
     outline: none; /* hide dotted outline in Firefox */
+    cursor: pointer;
 }
 
-a.button:active span.b {
-    background-position: bottom left;
-    padding: 6px 0 4px 18px; /* push text down 1px */
-}
 a.bigbutton:active span.b {
     background-position: bottom left;
     padding: 16px 0 16px 55px; /* push text down 1px */
+    cursor: pointer;
 }
 
   </style>
@@ -239,16 +193,14 @@ a.bigbutton:active span.b {
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="/getscrollbarwidth/jquery.getscrollbarwidth.js" type="text/javascript" charset="utf-8"></script>
   
-<body onload="matchHashes();">
+<body onload="onLoad();">
   <?php // For some reason splatter seems to need to be after the body has been created. ?>
   <script src="/splatter/src/jquery.splatter.js" type="text/javascript" charset="utf-8"></script>
-
-  <!-- Memcached the title? - <?php echo $memcached_title; ?> -->
 
 <!-- Google Analytics to see who gets splooted (and what they are splooting)! -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
-  _gaq.push(['_setCustomVar', 1, 'Splooting', '<?php echo $url; ?>', 2]);
+  _gaq.push(['_setCustomVar', 1, 'Splooting', '<?php echo $jsurl; ?>', 2]);
   _gaq.push(['_setAccount', 'UA-22631058-1']);
   _gaq.push(['_setDomainName', '.appsplot.com']);
   _gaq.push(['_trackPageview']);
@@ -286,13 +238,20 @@ function showWTF() {
 
 function goForthAndMultiple() {
   if (goForth) {
-    window.location.href = "<?php echo $url; ?>#" + window.location.hash;
+    window.location.href = "<?php echo $jsurl; ?>#" + window.location.hash;
   }
 }
 
-function matchHashes() {
+function onLoad() {
   // Hash part doesn't get to the server, so we do it client side.
-  $("#frame").src = "<?php echo $url; ?>#" + window.location.hash;
+  $("#frame").src = "<?php echo $jsurl; ?>#" + window.location.hash;
+
+  var s = document.createElement('script');
+  s.type = 'text/javascript';
+  s.async = true;
+  s.src = '/get_title.php?url=<?php echo $jsurl; ?>';
+  var x = document.getElementsByTagName('script')[0];
+  x.parentNode.insertBefore(s, x);
 }
 </script>
 <div id=paintbox onclick="Sploot(evt);">
@@ -300,7 +259,7 @@ function matchHashes() {
 <div id=canvas>
   <div id=sploot>&nbsp;</div>
 </div>
-<iframe id=frame src="<?php echo $url; ?>"></iframe>
+<iframe id=frame src="<?php echo $htmlurl; ?>"></iframe>
 
 <div id=wtflink>
  <a class="button" href="javascript: showWTF();">
@@ -359,14 +318,13 @@ function matchHashes() {
   <a id=goforth class="bigbutton" onclick="goForth = true; goForthAndMultiple();">
    <span class="b">
      Head to your destination<br>
-     <span style="font-size: 8pt; font-style: italic;">(<?php echo $url ?>)</span>
+     <span style="font-size: 8pt; font-style: italic;">(<?php echo $htmlurl ?>)</span>
     </span>
   </a>
  </div>
 </div>
 </div>
 </div>
-
 </body>  
 </html> 
 

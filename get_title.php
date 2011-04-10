@@ -5,7 +5,7 @@ $CACHEFOR=60*60*24*7;
 
 // Quick hack to prevent other sites using this API.
 //if (!isset($_SERVER('HTTP_REFERER')) || $_SERVER('HTTP_REFERER') != $_SERVER['SERVER_NAME']) {
-//  echo $_GET['jsonp'] . "('Please dont use me');";
+//  echo "document.title = 'Broken Referrer';";
 //}
 
 function get_web_page( $url )
@@ -44,10 +44,10 @@ $memcache->addServer('localhost', 11211);
 $url = $_GET['url'];
 
 $urlbits = parse_url($url);
-if (!isset($urlbits['host']) || (urlencode($urlbits['host']) != $urlbits['host'])) {
+if (!@isset($urlbits['host']) || (urlencode($urlbits['host']) != $urlbits['host'])) {
  header("Content-Type: text/plain");
  var_dump($urlbits);
- var_dump(array(urlencode($urlbits['host']) , $urlbits['host']));
+ var_dump(array(urlencode(@$urlbits['host']) , @$urlbits['host']));
  exit;
 }
 
@@ -90,11 +90,5 @@ if ($memcached_title) {
 }
 
 // This is a json response
-header("Content-Type: application/json");
-if (@$_GET['jsonp']) {
-  echo $_GET['jsonp'] . "(";
-}
-echo json_encode ( array('title' => $title, 'cached' => $memcached_title) );
-if (@$_GET['jsonp']) {
-  echo ");";
-};
+header("Content-Type: application/javascript");
+echo "document.title = " . json_encode ( $title ) . "; // cached? " . ($memcached_title ? "yes" : "no") . "\n";
