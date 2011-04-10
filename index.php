@@ -68,7 +68,7 @@ header("Content-Type: text/html; charset=UTF-8");
 <div id=canvas>
   <div id=sploot>&nbsp;</div>
 </div>
-<iframe id=frame src='<?php echo $htmlurl; ?>'></iframe>
+<iframe id=myframe src='<?php echo $htmlurl; ?>'></iframe>
 
 <div id=wtflink>
  <a class='button' href='javascript: showWTF();'>

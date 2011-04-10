@@ -25,7 +25,7 @@ function showWTF() {
 
 function goForthAndMultiple() {
   if (goForth) {
-    window.location.href = '<?php echo $jsurl; ?>#' + window.location.hash;
+    window.location.href = '<?php echo $jsurl; ?>' + window.location.hash;
   }
 }
 
@@ -33,7 +33,7 @@ function onLoad() {
   $('#paintbox').click( sploot );
 
   // Hash part doesn't get to the server, so we do it client side.
-  $('#frame').src = '<?php echo $jsurl; ?>#' + window.location.hash;
+  $('#myframe').attr('src', '<?php echo $jsurl; ?>' + window.location.hash);
 
   // Async Analytics
   var _gaq = _gaq || [];
