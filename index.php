@@ -223,7 +223,7 @@ function Sploot(evt) {
  // In 5 seconds show the wtf
  window.setTimeout(showWTFLink, 1e3);
  // In 60 seconds, send them to their real site
- window.setTimeout(goForthAndMultiple, 5e3);
+ window.setTimeout(goForthAndMultiple, 60e3);
 }
 
 function showWTFLink() {
