@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 // The default URL is google
 $url = 'http://www.google.com';
 
@@ -7,15 +9,15 @@ $serveruri  = urldecode($_SERVER['REQUEST_URI']);
 switch($servername) {
 
 // Normal mode - Take the URL from the request URI
-case "www.appsplot.com":
-case "appsplot.com":
+case 'www.appsplot.com':
+case 'appsplot.com':
   if (strlen($serveruri) > 1)
     $url = substr($serveruri, 1);
   break;
 
 // Appengine Mode - Host is from the servername, reset is from server URI.
 default:
-  $hostname = substr($servername, 0, strlen($servername)-strlen(".appsplot.com"));
+  $hostname = substr($servername, 0, strlen($servername)-strlen('.appsplot.com'));
   $url = "$url$serveruri";
 }
 
@@ -37,11 +39,11 @@ $htmlurl = htmlspecialchars($url);
 ?>
 <html>  
 <head>  
-  <meta charset="utf-8"/>  
+  <meta charset='utf-8'/>  
   <title></title>
-  <link rel="shortcut icon" href="http://<?php echo $urlbits['host']; ?>/favicon.ico" />
+  <link rel='shortcut icon' href='http://<?php echo $urlbits['host']; ?>/favicon.ico' />
 
-  <style type="text/css">
+  <style type='text/css'>
 
 html, body, iframe {
     padding:0; 
@@ -190,15 +192,15 @@ a.bigbutton:active span.b {
   </style>
 </head>  
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.js" type="text/javascript" charset="utf-8"></script>
-<script src="/getscrollbarwidth/jquery.getscrollbarwidth.js" type="text/javascript" charset="utf-8"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.js' type='text/javascript' charset='utf-8'></script>
+<script src='/getscrollbarwidth/jquery.getscrollbarwidth.js' type='text/javascript' charset='utf-8'></script>
   
-<body onload="onLoad();">
+<body onload='onLoad();'>
   <?php // For some reason splatter seems to need to be after the body has been created. ?>
-  <script src="/splatter/src/jquery.splatter.js" type="text/javascript" charset="utf-8"></script>
+  <script src='/splatter/src/jquery.splatter.js' type='text/javascript' charset='utf-8'></script>
 
 <!-- Google Analytics to see who gets splooted (and what they are splooting)! -->
-<script type="text/javascript">
+<script type='text/javascript'>
   var _gaq = _gaq || [];
   _gaq.push(['_setCustomVar', 1, 'Splooting', '<?php echo $jsurl; ?>', 2]);
   _gaq.push(['_setAccount', 'UA-22631058-1']);
@@ -212,7 +214,7 @@ a.bigbutton:active span.b {
   })();
 
 function Sploot(evt) {
- $("#sploot").splatter({
+ $('#sploot').splatter({
   min_font_size: 100,
   splat_count: 1,
   position: [Math.round(evt.pageX), Math.round(evt.pageY)],
@@ -225,8 +227,8 @@ function Sploot(evt) {
 }
 
 function showWTFLink() {
- $("#wtflink").css('right', 5+ $.getScrollbarWidth() );
- $("#wtflink").fadeIn('slow');
+ $('#wtflink').css('right', 5+ $.getScrollbarWidth() );
+ $('#wtflink').fadeIn('slow');
 };
 
 var goForth = true;
@@ -238,13 +240,13 @@ function showWTF() {
 
 function goForthAndMultiple() {
   if (goForth) {
-    window.location.href = "<?php echo $jsurl; ?>#" + window.location.hash;
+    window.location.href = '<?php echo $jsurl; ?>#' + window.location.hash;
   }
 }
 
 function onLoad() {
   // Hash part doesn't get to the server, so we do it client side.
-  $("#frame").src = "<?php echo $jsurl; ?>#" + window.location.hash;
+  $('#frame').src = '<?php echo $jsurl; ?>#' + window.location.hash;
 
   var s = document.createElement('script');
   s.type = 'text/javascript';
@@ -254,16 +256,16 @@ function onLoad() {
   x.parentNode.insertBefore(s, x);
 }
 </script>
-<div id=paintbox onclick="Sploot(evt);">
+<div id=paintbox onclick='Sploot(evt);'>
 </div>
 <div id=canvas>
   <div id=sploot>&nbsp;</div>
 </div>
-<iframe id=frame src="<?php echo $htmlurl; ?>"></iframe>
+<iframe id=frame src='<?php echo $htmlurl; ?>'></iframe>
 
 <div id=wtflink>
- <a class="button" href="javascript: showWTF();">
-  <span class="b">wtf is going on!?!?</span>
+ <a class='button' href='javascript: showWTF();'>
+  <span class='b'>wtf is going on!?!?</span>
  </a>
 </div>
 
@@ -302,23 +304,23 @@ function onLoad() {
  <h1>Credits</h1>
  <p>
   This website was created by Tim 'mithro' Ansell. You can find his blog at 
-  <a href="http://blog.mithis.com/">blog.mithis.com</a>, can follow him on
-  twitter at <a href="http://twitter.com/mithro">@mithro</a>, or email him at
-  <a href="mailto:appsplot@mithis.com">appsplot@mithis.com</a>.
+  <a href='http://blog.mithis.com/'>blog.mithis.com</a>, can follow him on
+  twitter at <a href='http://twitter.com/mithro'>@mithro</a>, or email him at
+  <a href='mailto:appsplot@mithis.com'>appsplot@mithis.com</a>.
  </p><p>
-  A big thankyou is also due to <a href="http://coryschires.com/">Cory Schires</a>
-  who made the <a href="http://coryschires.com/jquery-splatter-plugin/">jQuery Splatter Plugin</a>
+  A big thankyou is also due to <a href='http://coryschires.com/'>Cory Schires</a>
+  who made the <a href='http://coryschires.com/jquery-splatter-plugin/'>jQuery Splatter Plugin</a>
   which does the hard work of creating the splats.
  </p><p>
   Code for this project can be found at 
-  <a href="http://appsplot.com/github.com/mithro/appsplot.git">github.com/mithro/appsplot.git</a>.
+  <a href='http://appsplot.com/github.com/mithro/appsplot.git'>github.com/mithro/appsplot.git</a>.
  </p>
 
- <div style="margin-left: auto; margin-right: auto; width: 25%;">
-  <a id=goforth class="bigbutton" onclick="goForth = true; goForthAndMultiple();">
-   <span class="b">
+ <div style='margin-left: auto; margin-right: auto; width: 25%;'>
+  <a id=goforth class='bigbutton' onclick='goForth = true; goForthAndMultiple();'>
+   <span class='b'>
      Head to your destination<br>
-     <span style="font-size: 8pt; font-style: italic;">(<?php echo $htmlurl ?>)</span>
+     <span style='font-size: 8pt; font-style: italic;'>(<?php echo $htmlurl ?>)</span>
     </span>
   </a>
  </div>
