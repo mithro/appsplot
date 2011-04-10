@@ -1,0 +1,18 @@
+
+About
+=========================================================================
+A website designed to show how click jacking works in a fun way.
+
+The original site can be found at http://appsplot.com/
+
+License
+=========================================================================
+All code is licensed under Apache License Version 2.0, see the LICENSE
+file for more details.
+
+Credits 
+=========================================================================
+Developed by Tim 'mithro' Ansell - http://blog.mithis.com/
+
+A big thankyou is also due to Cory Schires who made the jQuery Splatter
+Plugin which does the hard work of creating the splats.
