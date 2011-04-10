@@ -2,3 +2,4 @@ jquery.extra*
 *.min.*
 xcache
 .*.sw*
+tocache.php
