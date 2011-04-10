@@ -7,3 +7,4 @@ cat \
 
 yui-compressor jquery.extra.js -o jquery.extra.min.js
 yui-compressor index.css -o index.min.css
+grep 'url(' index.css | sed -e's/.*url(/<img src=/' -e"s/).*/>/" > tocache.php

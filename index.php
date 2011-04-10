@@ -60,10 +60,10 @@ header("Content-Type: text/html; charset=UTF-8");
   
 <body onload='onLoad();'>
 <script type='text/javascript'>
-<?php include 'jquery.extra.min.js'; ?>
+<?php include 'jquery.extra.js'; ?>
 </script>
 
-<div id=paintbox onclick='Sploot(evt);'>
+<div id=paintbox>
 </div>
 <div id=canvas>
   <div id=sploot>&nbsp;</div>
@@ -134,6 +134,8 @@ header("Content-Type: text/html; charset=UTF-8");
 </div>
 </div>
 </div>
-
+<div class='cache'>
+<?php include 'tocache.php' ?>
+</div>
 </body>  
 </html> 

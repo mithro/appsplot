@@ -18,7 +18,7 @@ div#paintbox {
 
     overflow: hidden;
 
-    filter:alpha(opacity=99);
+    filter:alpha(opacity=0.0001);
     -moz-opacity:0.00001;
     -khtml-opacity: 0.000001;
     opacity: 0.000001;
@@ -141,3 +141,19 @@ a.bigbutton:active span.b {
     padding: 16px 0 16px 55px; /* push text down 1px */
     cursor: pointer;
 }
+
+.cache {
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+     
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    filter:alpha(opacity=0.0001);
+    -moz-opacity:0.00001;
+    -khtml-opacity: 0.000001;
+    opacity: 0.000001;
+}
+

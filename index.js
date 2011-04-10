@@ -1,4 +1,4 @@
-function Sploot(evt) {
+function sploot(evt) {
  $('#sploot').splatter({
   min_font_size: 100,
   splat_count: 1,
@@ -30,6 +30,8 @@ function goForthAndMultiple() {
 }
 
 function onLoad() {
+  $('#paintbox').click( sploot );
+
   // Hash part doesn't get to the server, so we do it client side.
   $('#frame').src = '<?php echo $jsurl; ?>#' + window.location.hash;
 
