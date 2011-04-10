@@ -52,218 +52,17 @@ header("Content-Type: text/html; charset=UTF-8");
   <link rel='shortcut icon' href='http://<?php echo $urlbits['host']; ?>/favicon.ico' />
 
   <style type='text/css'>
-
-html, body, iframe {
-    padding:0; 
-    margin:0; 
-    border: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-div#paintbox {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 100;
-    background-color: #ffffff;
-
-    overflow: hidden;
-
-    filter:alpha(opacity=99);
-    -moz-opacity:0.00001;
-    -khtml-opacity: 0.000001;
-    opacity: 0.000001;
-}
-div#canvas {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 1;
-    overflow: hidden;
-}
-div#sploot {
-    font-family: Helvetica, sans-serif;
-}
-
-div#wtflink {
-    display: none;
-    position: fixed;
-    bottom: 5px;
-    right: 5px;
-    z-index: 100
-}
-
-div#wtf {
-    display: none;
-    z-index: 101;
-    width: 100%;
-    height: 90%;
-    overflow: hidden;
-    float: left;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-div#wtf div#wtf-border {
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
-    height: 95%;
-    background: #fff;
-    border-left: 10px solid #000;
-    border-right: 10px solid #000;
-    border-bottom: 10px solid #000;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-bottom: 10px;
-}
-div#wtf div#wtf-content {
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-}
-
-div#wtf div#wtf-content h1 {
-    text-align: center;
-    padding: 1em;
-}
-
-a.button {
-    background: transparent url('/i/bg_button_a.gif') no-repeat scroll top right;
-    color: #444;
-    display: block;
-    float: left;
-    font: normal 12px arial, sans-serif;
-    height: 24px;
-    margin-right: 6px;
-    padding-right: 18px; /* sliding doors padding */
-    text-decoration: none;
-    text-align: center;
-    cursor: pointer;
-}
-a.button span.b {
-    background: transparent url('/i/bg_button_span.gif') no-repeat;
-    display: block;
-    line-height: 14px; 
-    padding: 5px 0 5px 18px;
-    cursor: pointer;
-}
-
-a.bigbutton {
-    background: transparent url('/i/bg_bigbutton_a.gif') no-repeat scroll top right;
-    color: #444;
-    display: block;
-    height: 73px;
-    text-decoration: none;
-    text-align: center;
-    padding: 0;
-    margin: 0;
-    margin-right: 18px;
-    padding-right: 54px; /* sliding doors padding */
-    cursor: pointer;
-}
-a.button:active span.b {
-    background-position: bottom left;
-    padding: 6px 0 4px 18px; /* push text down 1px */
-    cursor: pointer;
-}
-
-a.bigbutton span.b {
-    background: transparent url('/i/bg_bigbutton_span.gif') no-repeat;
-    display: block;
-    padding: 15px 0 15px 54px;
-    height: 43px;
-    cursor: pointer;
-}
-
-a.button:active, a.bigbutton:active {
-    background-position: bottom right;
-    color: #000;
-    outline: none; /* hide dotted outline in Firefox */
-    cursor: pointer;
-}
-
-a.bigbutton:active span.b {
-    background-position: bottom left;
-    padding: 16px 0 16px 55px; /* push text down 1px */
-    cursor: pointer;
-}
-
+<?php include 'index.min.css'; ?>
   </style>
 </head>  
 
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js' type='text/javascript' charset='utf-8'></script>
-<script src='/getscrollbarwidth/jquery.getscrollbarwidth.js' type='text/javascript' charset='utf-8'></script>
   
 <body onload='onLoad();'>
-  <?php // For some reason splatter seems to need to be after the body has been created. ?>
-  <script src='/splatter/src/jquery.splatter.js' type='text/javascript' charset='utf-8'></script>
-
-<!-- Google Analytics to see who gets splooted (and what they are splooting)! -->
 <script type='text/javascript'>
-  var _gaq = _gaq || [];
-  _gaq.push(['_setCustomVar', 1, 'Splooting', '<?php echo $jsurl; ?>', 2]);
-  _gaq.push(['_setAccount', 'UA-22631058-1']);
-  _gaq.push(['_setDomainName', '.appsplot.com']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-function Sploot(evt) {
- $('#sploot').splatter({
-  min_font_size: 100,
-  splat_count: 1,
-  position: [Math.round(evt.pageX), Math.round(evt.pageY)],
- });
-
- // In 5 seconds show the wtf
- window.setTimeout(showWTFLink, 1e3);
- // In 60 seconds, send them to their real site
- window.setTimeout(goForthAndMultiple, 60e3);
-}
-
-function showWTFLink() {
- $('#wtflink').css('right', 5+ $.getScrollbarWidth() );
- $('#wtflink').fadeIn('slow');
-};
-
-var goForth = true;
-function showWTF() {
-  // Don't leave appsplot.com during the wtf
-  goForth = false;
-  $('#wtf').slideDown('slow', 'swing');
-}
-
-function goForthAndMultiple() {
-  if (goForth) {
-    window.location.href = '<?php echo $jsurl; ?>#' + window.location.hash;
-  }
-}
-
-function onLoad() {
-  // Hash part doesn't get to the server, so we do it client side.
-  $('#frame').src = '<?php echo $jsurl; ?>#' + window.location.hash;
-
-  var s = document.createElement('script');
-  s.type = 'text/javascript';
-  s.async = true;
-  s.src = '/get_title.php?url=<?php echo $jsurl; ?>';
-  var x = document.getElementsByTagName('script')[0];
-  x.parentNode.insertBefore(s, x);
-}
+<?php include 'jquery.extra.min.js'; ?>
 </script>
+
 <div id=paintbox onclick='Sploot(evt);'>
 </div>
 <div id=canvas>
@@ -335,6 +134,6 @@ function onLoad() {
 </div>
 </div>
 </div>
+
 </body>  
 </html> 
-
