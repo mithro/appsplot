@@ -88,6 +88,7 @@ if ($memcached_title) {
   $expstr = "Expires: " . gmdate("D, d M Y H:i:s", 0) . " GMT";
   header($expstr);
 }
+header("Last-Modified: ". gmdate("D, d M Y H:i:s", time()) . " GMT");
 
 // This is a json response
 header("Content-Type: application/javascript");

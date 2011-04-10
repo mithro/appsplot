@@ -36,6 +36,14 @@ var_dump($urlbits);
 $jsurl = json_encode($url);
 $jsurl = substr($jsurl, 1, strlen($jsurl)-2);
 $htmlurl = htmlspecialchars($url);
+
+// Set the cache headers
+$CACHEFOR = 60*60*24*7;
+header("Cache-Control: max-age=$CACHEFOR, public");
+$expstr = "Expires: " . gmdate("D, d M Y H:i:s", time() + $CACHEFOR) . " GMT";
+header($expstr);
+header("Last-Modified: ". gmdate("D, d M Y H:i:s", time()) . " GMT");
+header("Content-Type: text/html; charset=UTF-8");
 ?>
 <html>  
 <head>  
@@ -192,7 +200,7 @@ a.bigbutton:active span.b {
   </style>
 </head>  
 
-<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.js' type='text/javascript' charset='utf-8'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js' type='text/javascript' charset='utf-8'></script>
 <script src='/getscrollbarwidth/jquery.getscrollbarwidth.js' type='text/javascript' charset='utf-8'></script>
   
 <body onload='onLoad();'>
