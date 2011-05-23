@@ -45,9 +45,9 @@ header($expstr);
 header("Last-Modified: ". gmdate("D, d M Y H:i:s", time()) . " GMT");
 header("Content-Type: text/html; charset=UTF-8");
 ?>
-<html>  
-<head>  
-  <meta charset='utf-8'/>  
+<html>
+<head>
+  <meta charset='utf-8'/>
   <title></title>
   <link rel='shortcut icon' href='http://<?php echo $urlbits['host']; ?>/favicon.ico' />
 
@@ -70,10 +70,10 @@ header("Content-Type: text/html; charset=UTF-8");
 
 </script>
 
-</head>  
+</head>
 
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js' type='text/javascript' charset='utf-8'></script>
-  
+
 <body onload='onLoad();'>
 <script type='text/javascript'>
 <?php include 'jquery.extra.min.js'; ?>
@@ -126,7 +126,7 @@ header("Content-Type: text/html; charset=UTF-8");
 
  <h1>Credits</h1>
  <p>
-  This website was created by Tim 'mithro' Ansell. You can find his blog at 
+  This website was created by Tim 'mithro' Ansell. You can find his blog at
   <a href='http://blog.mithis.com/'>blog.mithis.com</a>, can follow him on
   twitter at <a href='http://twitter.com/mithro'>@mithro</a>, or email him at
   <a href='mailto:appsplot@mithis.com'>appsplot@mithis.com</a>.
@@ -135,7 +135,7 @@ header("Content-Type: text/html; charset=UTF-8");
   who made the <a href='http://coryschires.com/jquery-splatter-plugin/'>jQuery Splatter Plugin</a>
   which does the hard work of creating the splats.
  </p><p>
-  Code for this project can be found at 
+  Code for this project can be found at
   <a href='http://appsplot.com/github.com/mithro/appsplot.git'>github.com/mithro/appsplot.git</a>.
  </p>
 
@@ -153,5 +153,5 @@ header("Content-Type: text/html; charset=UTF-8");
 <div class='cache'>
 <?php include 'tocache.php' ?>
 </div>
-</body>  
-</html> 
+</body>
+</html>
