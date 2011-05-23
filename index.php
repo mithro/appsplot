@@ -1,4 +1,13 @@
 <?php
+/**
+ * Licensed under the Apache License, Version 2.0 (see the "License" file).
+ *
+ * -*- coding: utf-8 -*-
+ * vim: set ts=2 sw=2 et sts=2 ai:
+ *
+ * Appsplot is an application which demonstrates clickjacking by placing splots
+ * over top of a webpage.
+ */
 ob_start();
 
 // The default URL is google
